@@ -1,0 +1,12 @@
+# O Editor Config configura os comportamentos do editor de texto de forma a manter a consistência do código entre os desenvolvedores.
+# Padrozinando coisas como: indentação, quebra de linha, espaçamento, etc.
+# Para o Editor Config funcionar no VSCode, é necessário instalar uma extensão chamada "EditorConfig for VS Code".
+# Para saber mais: https://editorconfig.org/
+
+root = true // Define que este é o arquivo raiz do projeto
+
+[*]
+indent_style = space
+indent_size = 2
+
+
