@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const colors = [
 	"text-red-500",
@@ -12,15 +12,17 @@ const colors = [
 	"text-indigo-500",
 	"text-gray-500",
 	"text-white",
-  "text-rose-950",
+	"text-rose-950",
 ];
 
 const NameAnimation = ({ name }: { name: string }) => {
 	const [color, setColor] = useState(colors[0]);
+
 	useEffect(() => {
 		const interval = setInterval(() => {
 			setColor(colors[Math.floor(Math.random() * colors.length)]);
 		}, 950);
+
 		return () => clearInterval(interval);
 	}, []);
 
