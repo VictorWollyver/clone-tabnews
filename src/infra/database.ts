@@ -7,6 +7,7 @@ async function query(query: string | { text: string; values: string[] }) {
 		password: process.env.POSTGRES_PASSWORD,
 		database: process.env.POSTGRES_DB,
 		port: Number(process.env.POSTGRES_PORT),
+		ssl: process.env.NODE_ENV === "production",
 	});
 
 	try {
@@ -15,7 +16,7 @@ async function query(query: string | { text: string; values: string[] }) {
 		return result;
 	} catch (error) {
 		console.error("Error executing query", error);
-    throw error;
+		throw error;
 	} finally {
 		await client.end();
 	}
