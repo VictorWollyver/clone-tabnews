@@ -1,6 +1,22 @@
 import { Client } from "pg";
 
 async function query(query: string | { text: string; values: string[] }) {
+	let client: Client | null = null;
+	try {
+		client = await getNewClient();
+		const result = await client.query(query);
+		return result;
+	} catch (error) {
+		console.error("Error executing query", error);
+		throw error;
+	} finally {
+		if (client) {
+			await client.end();
+		}
+	}
+}
+
+export async function getNewClient() {
 	const client = new Client({
 		host: process.env.POSTGRES_HOST,
 		user: process.env.POSTGRES_USER,
@@ -10,16 +26,8 @@ async function query(query: string | { text: string; values: string[] }) {
 		ssl: process.env.NODE_ENV === "production",
 	});
 
-	try {
-		await client.connect();
-		const result = await client.query(query);
-		return result;
-	} catch (error) {
-		console.error("Error executing query", error);
-		throw error;
-	} finally {
-		await client.end();
-	}
+	await client.connect();
+	return client;
 }
 
 export default query;
